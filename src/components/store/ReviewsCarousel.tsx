@@ -30,6 +30,7 @@ export default function ReviewsCarousel() {
   }, [n, paused, reduced, go]);
 
   if (!data || n === 0) return null;
+  const cur = data[i] ?? data[0];
 
   return (
     <section id="reviews" className="bg-parchment py-16 md:py-24">
@@ -54,14 +55,18 @@ export default function ReviewsCarousel() {
             touchX.current = null; setPaused(false);
           }}
         >
-          <div className="overflow-hidden rounded-3xl bg-white shadow-[0_14px_36px_-20px_rgba(23,40,31,0.45)]">
-            <div className="flex transition-transform duration-500 ease-out" style={{ transform: `translateX(-${i * 100}%)` }}>
-              {data.map((r, idx) => (
-                <div key={r.id} className="w-full shrink-0" aria-hidden={idx !== i} role="group" aria-label={`Review ${idx + 1} of ${n}`}>
-                  <img src={r.imageUrl} alt={r.caption || `Customer feedback ${idx + 1}`} loading="lazy" className="h-auto w-full" />
-                </div>
-              ))}
-            </div>
+          {/* Only the active review is shown, so the card is exactly as tall as the image (no extra space). */}
+          <div className="overflow-hidden rounded-3xl shadow-[0_14px_36px_-20px_rgba(23,40,31,0.45)]" aria-live={paused ? "polite" : "off"}>
+            <img
+              key={cur.id}
+              src={cur.imageUrl}
+              alt={cur.caption || `Customer feedback ${i + 1} of ${n}`}
+              className="block h-auto w-full"
+            />
+          </div>
+          {/* Preload the other slides so switching is instant */}
+          <div className="hidden" aria-hidden>
+            {data.map((r) => (r.id !== cur.id ? <img key={r.id} src={r.imageUrl} alt="" /> : null))}
           </div>
         </div>
 

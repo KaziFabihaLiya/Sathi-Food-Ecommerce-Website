@@ -17,7 +17,7 @@ async function main() {
       price: 999,
       stock: 48,
       sortOrder: 1,
-      imageUrl: "/images/gold-ghee.jpg",
+      imageUrl: "/images/Product-Post-2.jpeg",
       features: [
         "Rich golden color",
         "Aroma of tradition",
@@ -36,7 +36,7 @@ async function main() {
       price: 999,
       stock: 100,
       sortOrder: 2,
-      imageUrl: "/images/silk-ghee.jpg",
+      imageUrl: "/images/Product-Post-3.jpeg",
       features: [
         "Silky texture & delicate flavor",
         "Ideal for finishing & gourmet dishes",
@@ -54,7 +54,7 @@ async function main() {
       price: 1998,
       stock: 50,
       sortOrder: 3,
-      imageUrl: "/images/combo.jpg",
+      imageUrl: "/images/ProductPost-5.jpeg",
       features: [
         "Gold Ghee 500g + Silk Ghee 500g",
         "Great for gifting",

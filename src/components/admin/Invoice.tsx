@@ -1,5 +1,6 @@
-import { IMG } from "@/lib/images";
 "use client";
+import { IMG } from "@/lib/images";
+
 /* eslint-disable @next/next/no-img-element */
 import { useApi } from "@/lib/hooks";
 import { SITE, bdt, bdtText, fmtDate } from "@/lib/config";

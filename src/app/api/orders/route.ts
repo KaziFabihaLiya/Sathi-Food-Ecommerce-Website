@@ -170,6 +170,9 @@ export async function POST(req: Request) {
           items: true,
         },
       });
+    }, {
+      maxWait: 10000,   // how long to wait to start the transaction
+      timeout: 30000,   // how long the transaction may run
     });
 
     // 5. Send notification email after commit (never fail order if email fails)
