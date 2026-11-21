@@ -1,0 +1,114 @@
+// Prisma schema for Shathi Food Ghee E-commerce
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model Product {
+  id            String      @id @default(cuid())
+  slug          String      @unique
+  name          String
+  tagline       String
+  description   String
+  features      String[]
+  price         Int         // in BDT
+  weightGrams   Int
+  stock         Int
+  imageUrl      String
+  imagePublicId String?
+  badge         String?
+  active        Boolean     @default(true)
+  sortOrder     Int         @default(0)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  orderItems    OrderItem[]
+
+  @@index([active])
+  @@index([sortOrder])
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  address   String
+  district  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+
+  @@index([phone])
+}
+
+model Order {
+  id               String      @id @default(cuid())
+  invoiceNo        String      @unique
+  customerId       String
+  customer         Customer    @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  customerName     String
+  customerPhone    String
+  customerAddress  String
+  customerDistrict String
+  note             String?
+  paymentMethod    String      @default("COD")
+  status           OrderStatus @default(PENDING)
+  total            Int
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  items            OrderItem[]
+
+  @@index([customerId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   String?
+  product     Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productName String
+  unitPrice   Int
+  quantity    Int
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model Review {
+  id            String   @id @default(cuid())
+  imageUrl      String
+  imagePublicId String?
+  caption       String?
+  active        Boolean  @default(true)
+  sortOrder     Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([active])
+  @@index([sortOrder])
+}
+
+model AdminUser {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  passwordHash   String
+  failedAttempts Int       @default(0)
+  lockedUntil    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}

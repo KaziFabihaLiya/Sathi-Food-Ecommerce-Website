@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-cream: #FAF5E9;
+  --color-forest: #17281F;
+  --color-terracotta: #C1502E;
+  --color-gold: #C8962E;
+  --color-sand: #EDE3CE;
+  --color-ink: #2B2B2B;
+  --color-parchment: #F1E8D6;
+  --color-line: #E6DCC4;
+  --color-muted: #7A7264;
+  --font-serif: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { @apply bg-cream font-sans text-ink antialiased; }
+[id] { scroll-margin-top: 6.5rem; }
+
+:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; border-radius: 6px; }
+
+@layer components {
+  .btn-primary { @apply inline-flex items-center justify-center rounded-full bg-terracotta px-6 py-3 text-[15px] font-semibold text-cream shadow-[0_8px_18px_-8px_rgba(193,80,46,0.7)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60; }
+  .btn-light { @apply inline-flex items-center justify-center rounded-full border border-line bg-white px-6 py-3 text-[15px] font-semibold text-forest transition hover:bg-cream disabled:opacity-60; }
+  .btn-dark { @apply inline-flex items-center justify-center rounded-xl bg-forest px-5 py-3 text-[15px] font-semibold text-cream transition hover:brightness-125 disabled:cursor-not-allowed disabled:opacity-60; }
+  .btn-sm { @apply inline-flex items-center justify-center rounded-lg border border-line bg-white px-4 py-2 text-sm font-semibold text-forest transition hover:bg-cream disabled:opacity-60; }
+  .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.2em] text-gold; }
+  .field { @apply w-full rounded-xl border border-line bg-cream/60 px-4 py-3 text-[15px] text-ink placeholder:text-ink/35; }
+  .label { @apply mb-2 block text-sm font-medium text-forest; }
+  .panel { @apply rounded-3xl border border-line bg-white shadow-[0_10px_30px_-18px_rgba(23,40,31,0.35)]; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+@media print {
+  @page { margin: 12mm; }
+  html, body { background: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
